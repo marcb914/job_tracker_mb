@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Marc — New Grad Tracker 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f8f8f6;--surface:#ffffff;--surface2:#f2f2f0;--border:#e4e4e0;--border-strong:#c8c8c4;
+  --text:#0f0f0e;--text-sec:#52514e;--text-muted:#8a8880;
+  --accent:#1a56db;--accent-bg:#eff4ff;--accent-text:#1e429f;
+  --success:#057a55;--success-bg:#f3faf7;--success-text:#014737;
+  --warning:#b45309;--warning-bg:#fffbeb;--warning-text:#92400e;
+  --danger:#c81e1e;--danger-bg:#fdf2f2;--danger-text:#771d1d;
+  --radius:8px;--shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#111110;--surface:#1c1c1a;--surface2:#252523;--border:#2e2e2c;--border-strong:#3e3e3c;
+  --text:#f5f5f3;--text-sec:#a8a8a0;--text-muted:#666660;
+  --accent:#4f83f5;--accent-bg:#1a2a4a;--accent-text:#93b4f8;
+  --success:#31c48d;--success-bg:#0a2a20;--success-text:#84e1bc;
+  --warning:#f6a608;--warning-bg:#2a1f00;--warning-text:#fbd38d;
+  --danger:#f05252;--danger-bg:#2a0a0a;--danger-text:#f9b0b0;
+}}
+body{font-family:'Inter',system-ui,sans-serif;font-size:14px;color:var(--text);background:var(--bg);min-height:100vh}
+
+/* HEADER */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.header-inner{max-width:1400px;margin:0 auto;padding:1rem 0;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:36px;height:36px;background:var(--accent);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px}
+.logo-text h1{font-size:16px;font-weight:600;line-height:1.2}
+.logo-text p{font-size:12px;color:var(--text-muted);margin-top:1px}
+.header-actions{display:flex;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;padding:7px 14px;border-radius:var(--radius);border:1px solid var(--border-strong);background:var(--surface);color:var(--text-sec);cursor:pointer;text-decoration:none;transition:background .15s,border-color .15s;white-space:nowrap;font-family:inherit}
+.btn:hover{background:var(--surface2);border-color:var(--border-strong)}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{opacity:.9}
+
+/* EMAIL BANNER */
+.email-banner{background:var(--accent-bg);border-bottom:1px solid var(--accent);padding:.6rem 1.5rem}
+.email-banner-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.email-banner-inner span{font-size:13px;color:var(--accent-text);font-weight:500}
+.email-banner-inner input{font-size:13px;padding:5px 10px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--surface);color:var(--text);height:32px;width:240px;font-family:inherit}
+.email-banner-inner button{font-size:13px;padding:5px 14px;height:32px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent);color:#fff;cursor:pointer;font-family:inherit;font-weight:500}
+.email-saved{font-size:12px;color:var(--accent-text);margin-left:4px}
+
+/* MAIN */
+.main{max-width:1400px;margin:0 auto;padding:1.25rem 1.5rem}
+
+/* STATS */
+.stats{display:flex;gap:10px;margin-bottom:1.25rem;flex-wrap:wrap}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;min-width:100px;box-shadow:var(--shadow)}
+.stat-card .n{font-size:24px;font-weight:600;line-height:1;margin-bottom:3px}
+.stat-card .l{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.stat-card.open .n{color:var(--success)}
+.stat-card.applied .n{color:var(--accent)}
+.stat-card.urgent-stat .n{color:var(--danger)}
+
+/* CONTROLS */
+.controls{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:1rem;display:flex;gap:8px;flex-wrap:wrap;align-items:center;box-shadow:var(--shadow)}
+.controls input[type=text]{font-size:13px;padding:7px 12px;border:1px solid var(--border-strong);border-radius:var(--radius);background:var(--surface2);color:var(--text);height:36px;font-family:inherit;flex:1;min-width:180px}
+.controls input[type=text]:focus{outline:2px solid var(--accent);border-color:transparent}
+.controls select{font-size:13px;padding:7px 10px;border:1px solid var(--border-strong);border-radius:var(--radius);background:var(--surface2);color:var(--text);height:36px;font-family:inherit;cursor:pointer;min-width:150px}
+.controls select:focus{outline:2px solid var(--accent)}
+.results-count{font-size:12px;color:var(--text-muted);margin-left:auto;white-space:nowrap}
+
+/* TABLE */
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:900px}
+thead{position:sticky;top:64px;z-index:50}
+thead th{background:var(--surface2);border-bottom:1px solid var(--border-strong);padding:10px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;cursor:pointer;user-select:none;white-space:nowrap}
+thead th:hover{color:var(--text-sec)}
+thead th .sort-icon{margin-left:4px;opacity:.4;font-size:10px}
+tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--surface2)}
+tbody tr.urgent-row{background:var(--danger-bg)}
+tbody tr.urgent-row:hover{background:var(--danger-bg)}
+td{padding:10px 12px;vertical-align:middle}
+.cat-sep td{background:var(--surface2);padding:6px 12px;font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border)}
+
+/* BADGES */
+.cat-badge{font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;white-space:nowrap;display:inline-block}
+.cb-lsc{background:#e2efda;color:#2d5a1b}.cb-lsd{background:#dde9f7;color:#1a4070}.cb-bio{background:#fce4d6;color:#7a2e0f}
+.cb-med{background:#fff2cc;color:#7a5c00}.cb-apm{background:#e4dfec;color:#3d2c6e}
+.cb-ana{background:#d9e1f2;color:#1f3464}.cb-pol{background:#ededed;color:#3d3d3d}
+@media(prefers-color-scheme:dark){
+.cb-lsc{background:#1a3010;color:#7ecf5a}.cb-lsd{background:#0e1e30;color:#6aaaf0}.cb-bio{background:#2a1008;color:#f09060}
+.cb-med{background:#1e1800;color:#e8c060}.cb-apm{background:#16102a;color:#b09af0}
+.cb-ana{background:#0e1428;color:#7098e0}.cb-pol{background:#1e1e1e;color:#aaa}
+}
+.co-name{font-weight:600;font-size:13px;color:var(--text)}
+.role-text{font-size:12px;color:var(--text-sec);margin-top:2px;line-height:1.4}
+.window-text{font-size:12px;color:var(--text-sec);line-height:1.4}
+.window-urgent{color:var(--danger);font-weight:500}
+.salary-text{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap}
+
+/* STATUS SELECT */
+.status-wrap{position:relative}
+.status-sel{font-size:12px;font-weight:500;padding:4px 28px 4px 10px;border-radius:20px;border:1px solid var(--border-strong);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;font-family:inherit;min-width:120px}
+.status-sel.s-monitoring{background-color:var(--warning-bg);color:var(--warning-text);border-color:var(--warning)}
+.status-sel.s-open{background-color:var(--success-bg);color:var(--success-text);border-color:var(--success)}
+.status-sel.s-applied{background-color:var(--accent-bg);color:var(--accent-text);border-color:var(--accent)}
+.status-sel.s-closed{background-color:var(--surface2);color:var(--text-muted);border-color:var(--border-strong)}
+.status-sel.s-pass{background-color:var(--surface2);color:var(--text-muted);border-color:var(--border-strong)}
+
+/* NOTES */
+.notes-input{font-size:12px;padding:5px 8px;border:1px solid transparent;border-radius:var(--radius);background:transparent;color:var(--text);width:100%;font-family:inherit;transition:border .15s,background .15s}
+.notes-input:hover{border-color:var(--border-strong);background:var(--surface2)}
+.notes-input:focus{border-color:var(--accent);background:var(--surface2);outline:none}
+.notes-input::placeholder{color:var(--text-muted)}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--surface);border:1px solid var(--border-strong);padding:10px 16px;border-radius:var(--radius);font-size:13px;color:var(--text-sec);box-shadow:var(--shadow);display:none;z-index:999;align-items:center;gap:8px}
+.toast.show{display:flex}
+.toast-dot{width:8px;height:8px;border-radius:50%;background:var(--success);flex-shrink:0}
+
+/* EMPTY */
+.empty-state{padding:60px 20px;text-align:center;color:var(--text-muted)}
+.empty-state i{font-size:32px;display:block;margin-bottom:12px;opacity:.4}
+
+/* ALERT MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
+.modal-bg.show{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal h2{font-size:16px;font-weight:600;margin-bottom:8px}
+.modal p{font-size:13px;color:var(--text-sec);margin-bottom:16px;line-height:1.6}
+.modal-co{font-weight:600;color:var(--text)}
+.modal-window{font-size:12px;color:var(--danger);font-weight:500;background:var(--danger-bg);padding:6px 10px;border-radius:var(--radius);margin-bottom:16px;display:block}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+.main{padding:.75rem}
+.stats{gap:6px}
+.stat-card{min-width:80px;padding:10px 12px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">MB</div>
+      <div class="logo-text">
+        <h1>New Grad Tracker — 2027</h1>
+        <p>60 companies · class of 2027 · all saves stay in this browser</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn" onclick="exportCSV()"><i class="ti ti-download"></i> Export CSV</button>
+      <button class="btn" onclick="resetConfirm()"><i class="ti ti-refresh"></i> Reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="email-banner">
+  <div class="email-banner-inner">
+    <i class="ti ti-bell" style="color:var(--accent-text);font-size:16px"></i>
+    <span>Alert email:</span>
+    <input type="email" id="alertEmail" placeholder="your@email.com" oninput="emailDirty=true"/>
+    <button onclick="saveEmail()">Save</button>
+    <span class="email-saved" id="emailStatus"></span>
+    <span style="font-size:12px;color:var(--accent-text);margin-left:auto">Marking a role "Open" shows an alert card with mailto link — one click sends from your email app.</span>
+  </div>
+</div>
+
+<div class="main">
+  <div class="stats" id="statsRow"></div>
+
+  <div class="controls">
+    <input type="text" id="searchBox" placeholder="Search company, role, notes…" oninput="render()"/>
+    <select id="catFilter" onchange="render()">
+      <option value="">All categories</option>
+      <option value="Life Sciences Consulting">Life sciences consulting</option>
+      <option value="LS Software & Data">LS software & data</option>
+      <option value="Biotech/Pharma Programs">Biotech / pharma</option>
+      <option value="MedTech & Tools LDPs">MedTech & tools</option>
+      <option value="Tech APM Programs">Tech APM</option>
+      <option value="Analytics & Strategy">Analytics & strategy</option>
+      <option value="Policy & Research">Policy & research</option>
+    </select>
+    <select id="statusFilter" onchange="render()">
+      <option value="">All statuses</option>
+      <option value="Open">Open now</option>
+      <option value="Monitoring">Monitoring</option>
+      <option value="Applied">Applied</option>
+      <option value="Closed">Closed</option>
+      <option value="Pass">Pass</option>
+    </select>
+    <select id="fnFilter" onchange="render()">
+      <option value="">All functions</option>
+      <option value="Consulting">Consulting</option>
+      <option value="Analytics">Analytics</option>
+      <option value="Product">Product (APM)</option>
+      <option value="Analyst">Analyst / strategy</option>
+      <option value="Other">Other / LDP</option>
+    </select>
+    <span class="results-count" id="resultsCount"></span>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortBy('cat')" style="width:110px">Category <span class="sort-icon" id="sa-cat"></span></th>
+          <th onclick="sortBy('co')" style="min-width:140px">Company <span class="sort-icon" id="sa-co"></span></th>
+          <th style="min-width:200px">Role / program</th>
+          <th onclick="sortBy('window')" style="min-width:160px">Opening window <span class="sort-icon" id="sa-window"></span></th>
+          <th style="min-width:130px">Salary est.</th>
+          <th onclick="sortBy('status')" style="width:130px">Status <span class="sort-icon" id="sa-status"></span></th>
+          <th style="min-width:160px">Notes</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Alert modal -->
+<div class="modal-bg" id="alertModal">
+  <div class="modal">
+    <h2>🟢 Role marked Open</h2>
+    <p>You marked <span class="modal-co" id="modal-co"></span> as open. Apply as soon as possible — windows close fast.</p>
+    <span class="modal-window" id="modal-window"></span>
+    <p style="margin-bottom:12px">Your alert email is set to <strong id="modal-email"></strong>. Click below to open a pre-filled email to yourself as a reminder.</p>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal()">Dismiss</button>
+      <a class="btn btn-primary" id="modal-mailto" href="#">Send myself a reminder</a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span class="toast-dot"></span><span id="toastMsg">Saved</span></div>
+
+<script>
+const BASE=[
+{cat:"Life Sciences Consulting",co:"ZS Associates",role:"Decision Analytics Associate (DAA)",fn:"Consulting",window:"Fall (Aug–Oct)",salary:"~$85–107K TC",urgent:false},
+{cat:"Life Sciences Consulting",co:"ClearView Healthcare Partners",role:"Life Sciences Strategy Analyst",fn:"Consulting",window:"Summer–Fall",salary:"~$90–115K TC",urgent:false},
+{cat:"Life Sciences Consulting",co:"Trinity Life Sciences",role:"Analyst",fn:"Consulting",window:"Fall",salary:"~$74–85K base",urgent:false},
+{cat:"Life Sciences Consulting",co:"Putnam (Inizio)",role:"Analyst / Associate Consultant",fn:"Consulting",window:"Fall",salary:"~$85–100K TC",urgent:false},
+{cat:"Life Sciences Consulting",co:"Health Advances",role:"Analyst",fn:"Consulting",window:"Fall",salary:"~$80–95K TC",urgent:false},
+{cat:"Life Sciences Consulting",co:"L.E.K. Consulting",role:"Associate (Life Sciences)",fn:"Consulting",window:"Early fall — closes fast",salary:"~$110–130K TC",urgent:false},
+{cat:"Life Sciences Consulting",co:"Simon-Kucher",role:"Consultant (Life Sciences / Healthcare)",fn:"Consulting",window:"Fall + rolling",salary:"~$90–110K TC",urgent:false},
+{cat:"Life Sciences Consulting",co:"Beghou Consulting",role:"Analyst",fn:"Analytics",window:"Fall + rolling",salary:"~$75–90K TC",urgent:false},
+{cat:"Life Sciences Consulting",co:"Guidehouse",role:"Consultant — Life Sciences",fn:"Consulting",window:"Fall",salary:"~$80–95K TC",urgent:false},
+{cat:"Life Sciences Consulting",co:"Blue Matter Consulting",role:"Associate",fn:"Consulting",window:"Rolling",salary:"~$85–100K TC",urgent:false},
+{cat:"Life Sciences Consulting",co:"Kx Advisors",role:"Associate",fn:"Consulting",window:"Rolling",salary:"~$80–95K TC",urgent:false},
+{cat:"Life Sciences Consulting",co:"Analysis Group",role:"Analyst (Health Economics / Life Sciences)",fn:"Analytics",window:"Fall (campus)",salary:"~$95–110K TC",urgent:false},
+{cat:"LS Software & Data",co:"Veeva Systems",role:"Generation Veeva: Associate Business Consultant (BCDP)",fn:"Consulting",window:"Open now / rolling cohorts",salary:"~$70–90K base + equity",urgent:true},
+{cat:"LS Software & Data",co:"Veeva Systems",role:"Generation Veeva: Analytics Development Program (ADP)",fn:"Analytics",window:"Rolling by cohort",salary:"~$70–85K base + equity",urgent:false},
+{cat:"LS Software & Data",co:"IQVIA",role:"Analyst / Associate Consultant (RWE)",fn:"Analytics",window:"Fall + rolling",salary:"~$70–90K TC",urgent:false},
+{cat:"LS Software & Data",co:"Epic Systems",role:"Project Manager / Implementation Consultant",fn:"Other",window:"Always open — rolling",salary:"~$85–100K TC",urgent:true},
+{cat:"LS Software & Data",co:"Tempus AI",role:"Clinical Data Analyst / early-career roles",fn:"Analytics",window:"Rolling — networking priority",salary:"~$70–95K + equity",urgent:false},
+{cat:"LS Software & Data",co:"Flatiron Health (Roche)",role:"Data Insights Analyst / early-career",fn:"Analytics",window:"Rolling",salary:"~$85–110K TC",urgent:false},
+{cat:"LS Software & Data",co:"Komodo Health",role:"Associate — Customer Success / Analytics",fn:"Analytics",window:"Rolling — watch careers page",salary:"~$80–105K + equity",urgent:false},
+{cat:"LS Software & Data",co:"Benchling",role:"Early-career roles (mostly technical)",fn:"Other",window:"Rolling — long-shot, network in",salary:"~$100–130K + equity",urgent:false},
+{cat:"LS Software & Data",co:"Verily (Alphabet)",role:"Early-career / associate roles",fn:"Analytics",window:"Rolling — monitor postings",salary:"~$100–130K TC",urgent:false},
+{cat:"Biotech/Pharma Programs",co:"Genentech",role:"Commercial Rotation Development Program (CRDP)",fn:"Other",window:"Fall (Aug–Oct) — referrals critical",salary:"~$95–115K TC",urgent:false},
+{cat:"Biotech/Pharma Programs",co:"Genentech",role:"Finance Rotation Dev Program (eFRDP)",fn:"Analyst",window:"Fall",salary:"~$90–110K TC",urgent:false},
+{cat:"Biotech/Pharma Programs",co:"Roivant Sciences",role:"Rotational Analyst Program (2 yr, 4 rotations)",fn:"Analyst",window:"Sporadic — network NOW",salary:"~$100–130K TC",urgent:false},
+{cat:"Biotech/Pharma Programs",co:"AstraZeneca",role:"Commercial Leadership Dev Program (CLDP)",fn:"Other",window:"Fall",salary:"~$80–95K TC",urgent:false},
+{cat:"Biotech/Pharma Programs",co:"Pfizer",role:"R&D Rotational Program (2 yr, 4 rotations)",fn:"Other",window:"Annual — watch fall 2026",salary:"~$75–90K TC",urgent:false},
+{cat:"Biotech/Pharma Programs",co:"Amgen",role:"Ignite / Accelerate R&D Rotational Programs",fn:"Other",window:"Annual cycle (fall)",salary:"~$75–95K TC",urgent:false},
+{cat:"Biotech/Pharma Programs",co:"Johnson & Johnson",role:"Finance Leadership Dev Program (FLDP)",fn:"Analyst",window:"Fall (Aug–Oct)",salary:"~$75–90K TC",urgent:false},
+{cat:"Biotech/Pharma Programs",co:"GSK",role:"Future Leaders / early talent programs (US)",fn:"Other",window:"Fall — verify current US tracks",salary:"~$70–90K TC",urgent:false},
+{cat:"MedTech & Tools LDPs",co:"Danaher",role:"Operations Leadership Program (OLP) — 2-yr",fn:"Other",window:"Fall",salary:"~$75–90K TC",urgent:false},
+{cat:"MedTech & Tools LDPs",co:"Thermo Fisher Scientific",role:"Commercial / Finance / Operations LDP (undergrad)",fn:"Other",window:"Fall (Aug–Oct)",salary:"~$70–85K base",urgent:false},
+{cat:"MedTech & Tools LDPs",co:"Abbott",role:"Professional Development Program (PDP)",fn:"Analyst",window:"Fall",salary:"~$70–85K TC",urgent:false},
+{cat:"MedTech & Tools LDPs",co:"Stryker",role:"Early-career rotational / sales-marketing associate",fn:"Other",window:"Fall + rolling",salary:"~$70–90K TC",urgent:false},
+{cat:"Tech APM Programs",co:"Google",role:"Associate Product Manager (APM)",fn:"Product",window:"Late Sept 2026 — ~4 week window",salary:"~$143K base / ~$210K TC",urgent:false},
+{cat:"Tech APM Programs",co:"Google",role:"Associate Product Marketing Manager (APMM)",fn:"Product",window:"Fall",salary:"~$120–150K TC",urgent:false},
+{cat:"Tech APM Programs",co:"Meta",role:"Rotational Product Manager (RPM)",fn:"Product",window:"Summer waves — ACTIVE NOW",salary:"$172–193K posted",urgent:true},
+{cat:"Tech APM Programs",co:"Databricks",role:"Associate Product Manager (2027 cohort)",fn:"Product",window:"OPEN NOW — window ~4 weeks",salary:"$133–150K + equity",urgent:true},
+{cat:"Tech APM Programs",co:"Salesforce",role:"Associate Product Manager",fn:"Product",window:"Fall + spring — windows as short as 2 hrs",salary:"$132–159K base",urgent:false},
+{cat:"Tech APM Programs",co:"Atlassian",role:"Associate Product Manager",fn:"Product",window:"Mid-Sept to fall — ~4 day windows",salary:"$97–153K base",urgent:false},
+{cat:"Tech APM Programs",co:"LinkedIn",role:"Associate Product Builder (APB)",fn:"Product",window:"Late summer (Jan start)",salary:"$126–207K",urgent:false},
+{cat:"Tech APM Programs",co:"Uber",role:"Associate Product Manager",fn:"Product",window:"Sporadic — alert-only strategy",salary:"~$140–170K TC",urgent:false},
+{cat:"Tech APM Programs",co:"TikTok",role:"PM Graduate Program",fn:"Product",window:"Rolling Aug–Apr",salary:"$112–248K posted range",urgent:true},
+{cat:"Tech APM Programs",co:"Roblox",role:"Associate Product Manager",fn:"Product",window:"Fall to January (~1-month windows)",salary:"~$140–143K",urgent:false},
+{cat:"Tech APM Programs",co:"Coinbase",role:"Associate Product Manager",fn:"Product",window:"Fall (last closed Nov)",salary:"$122–144K",urgent:false},
+{cat:"Tech APM Programs",co:"Intuit",role:"Rotational Product Manager (RPM)",fn:"Product",window:"September 2026 — pre-announced",salary:"~$130–160K TC",urgent:false},
+{cat:"Tech APM Programs",co:"Figma",role:"APM / Early Career Product",fn:"Product",window:"October — ~2 week window",salary:"~$130–160K TC",urgent:false},
+{cat:"Tech APM Programs",co:"Duolingo",role:"Associate Product Manager",fn:"Product",window:"Winter (second-wave option)",salary:"$123–167K",urgent:false},
+{cat:"Tech APM Programs",co:"IBM",role:"Entry-Level Product Manager",fn:"Product",window:"Spring (Mar–Apr) — Austin office",salary:"$92–138K",urgent:false},
+{cat:"Tech APM Programs",co:"Microsoft",role:"Product Manager (new grad, team-by-team)",fn:"Product",window:"Fall (Oct–Nov), per team",salary:"~$140–170K TC",urgent:false},
+{cat:"Tech APM Programs",co:"Capital One",role:"Associate Product Manager (separate from BA offer)",fn:"Product",window:"September (~11 day window)",salary:"~$130–160K TC",urgent:false},
+{cat:"Analytics & Strategy",co:"Capital One",role:"Business Analyst — return offer (your baseline)",fn:"Analyst",window:"Offer in hand",salary:"~$110–130K TC",urgent:false},
+{cat:"Analytics & Strategy",co:"Visa",role:"Associate Business Analyst — New College Grad",fn:"Analyst",window:"Summer–Fall (Austin posting confirmed)",salary:"~$85–105K TC",urgent:false},
+{cat:"Analytics & Strategy",co:"Mastercard",role:"Launch Program — rotational new grad",fn:"Analyst",window:"Fall",salary:"~$85–110K TC",urgent:false},
+{cat:"Analytics & Strategy",co:"Amazon",role:"Business Analyst / Business Intelligence Engineer",fn:"Analytics",window:"Open mid-summer — CHECK NOW",salary:"~$110–150K TC",urgent:true},
+{cat:"Analytics & Strategy",co:"84.51° (Kroger)",role:"Insights Analyst",fn:"Analytics",window:"Fall",salary:"~$75–90K TC",urgent:false},
+{cat:"Analytics & Strategy",co:"DaVita",role:"Redwoods Analyst / Leadership Program",fn:"Analyst",window:"Fall — WARM LEAD: email summit contacts now",salary:"~$70–85K TC",urgent:false},
+{cat:"Analytics & Strategy",co:"UnitedHealth / Optum",role:"Various LDPs (tech, strategy-adjacent)",fn:"Other",window:"Fall",salary:"~$70–90K TC",urgent:false},
+{cat:"Policy & Research",co:"STPI (IDA)",role:"Science Policy Fellowship (2-yr)",fn:"Other",window:"Early fall app, due winter",salary:"~$55–70K",urgent:false},
+];
+
+const CAT_CLASS={
+"Life Sciences Consulting":"cb-lsc","LS Software & Data":"cb-lsd",
+"Biotech/Pharma Programs":"cb-bio","MedTech & Tools LDPs":"cb-med",
+"Tech APM Programs":"cb-apm","Analytics & Strategy":"cb-ana","Policy & Research":"cb-pol"
+};
+const CAT_SHORT={
+"Life Sciences Consulting":"LS Consulting","LS Software & Data":"LS Data",
+"Biotech/Pharma Programs":"Biotech","MedTech & Tools LDPs":"MedTech",
+"Tech APM Programs":"Tech APM","Analytics & Strategy":"Analytics","Policy & Research":"Policy"
+};
+const FN_MAP={
+"Consulting / Analytics":"Consulting","Consulting":"Consulting","Analytics":"Analytics",
+"Product":"Product","Analyst":"Analyst","Analyst / Finance":"Analyst","Analyst / Strategy":"Analyst",
+"Analyst / Other":"Analyst","Product / Marketing":"Product","Product / Analytics":"Product",
+"Consulting / Product":"Consulting","Other":"Other","Other / Operations":"Other",
+"Other / R&D Ops":"Other","Other / R&D":"Other","Other / LDP":"Other",
+"Other / Policy":"Other","Other / Commercial":"Other"
+};
+const STORE="marc_tracker_v3";
+let data=[],sortField="",sortDir=1,toastTimer,emailDirty=false;
+
+function loadData(){
+  const saved=localStorage.getItem(STORE);
+  if(saved){try{
+    const p=JSON.parse(saved);
+    data=BASE.map((b,i)=>({...b,status:p[i]?.status||"Monitoring",notes:p[i]?.notes||""}));
+    return;
+  }catch(e){}}
+  data=BASE.map(b=>({...b,status:"Monitoring",notes:""}));
+  // Pre-seed urgent/open items
+  [12,15,35,36,41,53].forEach(i=>{if(data[i])data[i].status="Open";});
+}
+function saveData(){
+  localStorage.setItem(STORE,JSON.stringify(data.map(d=>({status:d.status,notes:d.notes}))));
+  showToast("Saved");
+}
+function saveEmail(){
+  const v=document.getElementById("alertEmail").value.trim();
+  if(!v||!v.includes("@")){showToast("Enter a valid email first","err");return;}
+  localStorage.setItem("marc_alert_email",v);
+  document.getElementById("emailStatus").textContent="✓ Email saved";
+  showToast("Alert email saved");
+}
+function loadEmail(){
+  const e=localStorage.getItem("marc_alert_email");
+  if(e){document.getElementById("alertEmail").value=e;document.getElementById("emailStatus").textContent="✓ Email saved";}
+}
+function showToast(msg,type){
+  const t=document.getElementById("toast");
+  document.getElementById("toastMsg").textContent=msg||"Saved";
+  document.querySelector(".toast-dot").style.background=type==="err"?"var(--danger)":"var(--success)";
+  t.classList.add("show");clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove("show"),2000);
+}
+function updateStats(){
+  const open=data.filter(d=>d.status==="Open").length;
+  const applied=data.filter(d=>d.status==="Applied").length;
+  const monitoring=data.filter(d=>d.status==="Monitoring").length;
+  const urgentOpen=data.filter(d=>d.urgent&&d.status==="Monitoring").length;
+  document.getElementById("statsRow").innerHTML=`
+    <div class="stat-card"><div class="n">${data.length}</div><div class="l">Total roles</div></div>
+    <div class="stat-card open"><div class="n">${open}</div><div class="l">Open now</div></div>
+    <div class="stat-card applied"><div class="n">${applied}</div><div class="l">Applied</div></div>
+    <div class="stat-card"><div class="n">${monitoring}</div><div class="l">Monitoring</div></div>
+    ${urgentOpen?`<div class="stat-card urgent-stat"><div class="n">${urgentOpen}</div><div class="l">Act now</div></div>`:""}
+  `;
+}
+function sortBy(f){
+  if(sortField===f)sortDir*=-1;else{sortField=f;sortDir=1;}
+  document.querySelectorAll(".sort-icon").forEach(e=>e.textContent="");
+  const el=document.getElementById("sa-"+f);
+  if(el)el.textContent=sortDir===1?" ↑":" ↓";
+  render();
+}
+function fnMatch(row,fv){
+  if(!fv)return true;
+  return(FN_MAP[row.fn]||row.fn)===fv;
+}
+function render(){
+  const q=document.getElementById("searchBox").value.toLowerCase();
+  const catF=document.getElementById("catFilter").value;
+  const stF=document.getElementById("statusFilter").value;
+  const fnF=document.getElementById("fnFilter").value;
+  let rows=[...data];
+  if(q)rows=rows.filter(r=>(r.co+r.role+r.window+r.salary+(r.notes||"")).toLowerCase().includes(q));
+  if(catF)rows=rows.filter(r=>r.cat===catF);
+  if(stF)rows=rows.filter(r=>r.status===stF);
+  if(fnF)rows=rows.filter(r=>fnMatch(r,fnF));
+  if(sortField){rows.sort((a,b)=>{
+    const av=(a[sortField]||"").toLowerCase(),bv=(b[sortField]||"").toLowerCase();
+    return av<bv?-sortDir:av>bv?sortDir:0;
+  });}
+  updateStats();
+  document.getElementById("resultsCount").textContent=rows.length+" of "+data.length+" roles";
+  const tb=document.getElementById("tbody");
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="7" class="empty-state"><i class="ti ti-search"></i>No roles match your filters.</td></tr>`;return;}
+  let lastCat="",html="";
+  rows.forEach(row=>{
+    const gi=data.indexOf(row);
+    if(!sortField&&row.cat!==lastCat){
+      html+=`<tr class="cat-sep"><td colspan="7">${row.cat}</td></tr>`;
+      lastCat=row.cat;
+    }
+    const isUrgent=row.urgent&&(row.status==="Monitoring");
+    const sc="status-sel s-"+row.status.toLowerCase();
+    html+=`<tr class="${isUrgent?"urgent-row":""}">
+      <td><span class="cat-badge ${CAT_CLASS[row.cat]}">${CAT_SHORT[row.cat]}</span></td>
+      <td><div class="co-name">${row.co}</div></td>
+      <td><div class="role-text">${row.role}</div></td>
+      <td><div class="window-text${isUrgent?" window-urgent":""}">${row.window}</div></td>
+      <td><div class="salary-text">${row.salary}</div></td>
+      <td>
+        <select class="${sc}" onchange="changeStatus(${gi},this.value,this)">
+          <option value="Monitoring"${row.status==="Monitoring"?" selected":""}>Monitoring</option>
+          <option value="Open"${row.status==="Open"?" selected":""}>Open now</option>
+          <option value="Applied"${row.status==="Applied"?" selected":""}>Applied</option>
+          <option value="Closed"${row.status==="Closed"?" selected":""}>Closed</option>
+          <option value="Pass"${row.status==="Pass"?" selected":""}>Pass</option>
+        </select>
+      </td>
+      <td><input class="notes-input" type="text" placeholder="Add notes…" value="${(row.notes||"").replace(/"/g,"&quot;")}" oninput="changeNotes(${gi},this.value)"/></td>
+    </tr>`;
+  });
+  tb.innerHTML=html;
+}
+function changeStatus(idx,val,sel){
+  data[idx].status=val;
+  sel.className="status-sel s-"+val.toLowerCase();
+  saveData();render();
+  if(val==="Open"){
+    const email=localStorage.getItem("marc_alert_email");
+    document.getElementById("modal-co").textContent=data[idx].co+" — "+data[idx].role;
+    document.getElementById("modal-window").textContent="Window: "+data[idx].window;
+    if(email){
+      document.getElementById("modal-email").textContent=email;
+      const subj=encodeURIComponent("APPLY NOW: "+data[idx].co+" — "+data[idx].role);
+      const body=encodeURIComponent("You marked this role as Open in your tracker.\n\nCompany: "+data[idx].co+"\nRole: "+data[idx].role+"\nWindow: "+data[idx].window+"\nSalary: "+data[idx].salary+"\n\nApply immediately — these windows close fast.");
+      document.getElementById("modal-mailto").href="mailto:"+email+"?subject="+subj+"&body="+body;
+      document.getElementById("modal-mailto").style.display="inline-flex";
+    }else{
+      document.getElementById("modal-email").textContent="(no email saved — add yours above)";
+      document.getElementById("modal-mailto").style.display="none";
+    }
+    document.getElementById("alertModal").classList.add("show");
+  }
+}
+function changeNotes(idx,val){
+  data[idx].notes=val;
+  clearTimeout(window._nt);
+  window._nt=setTimeout(saveData,800);
+}
+function closeModal(){document.getElementById("alertModal").classList.remove("show");}
+document.getElementById("alertModal").addEventListener("click",function(e){if(e.target===this)closeModal();});
+function exportCSV(){
+  const headers=["Category","Company","Role","Function","Opening Window","Salary","Status","Notes"];
+  const rows=data.map(d=>[d.cat,d.co,d.role,d.fn,d.window,d.salary,d.status,(d.notes||"").replace(/,/g,";")]);
+  const csv=[headers,...rows].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n");
+  const a=document.createElement("a");a.href="data:text/csv;charset=utf-8,"+encodeURIComponent(csv);
+  a.download="new_grad_tracker_2027.csv";a.click();
+}
+function resetConfirm(){
+  if(confirm("Reset all statuses and notes back to defaults? This cannot be undone.")){
+    localStorage.removeItem(STORE);loadData();render();showToast("Reset complete");
+  }
+}
+loadData();loadEmail();render();
+</script>
+</body>
+</html>
