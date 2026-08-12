@@ -1,0 +1,47 @@
+# ─────────────────────────────────────────────────────────────────
+# daily_job_check.yml
+# Runs the job checker every morning at 8am Central Time (13:00 UTC)
+# Also lets you trigger it manually from the GitHub Actions tab
+# ─────────────────────────────────────────────────────────────────
+name: Daily Job Check
+
+on:
+  schedule:
+    - cron: "0 13 * * 1-5"   # 8am CT weekdays (Mon-Fri). Change to * * * for every day.
+  workflow_dispatch:           # allows manual trigger from GitHub Actions tab
+
+permissions:
+  contents: write              # needed to commit the updated job_state.json
+
+jobs:
+  check-jobs:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the repo so the script can read/write job_state.json
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # 2. Set up Python (no extra packages needed — script uses stdlib only)
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 3. Run the checker — secrets injected as environment variables
+      - name: Run job checker
+        env:
+          GMAIL_USER:     ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
+          ALERT_TO:       ${{ secrets.GMAIL_USER }}   # sends to same address
+        run: python check_jobs.py
+
+      # 4. Commit the updated state file back to the repo
+      #    so tomorrow's run knows what today found
+      - name: Save state back to repo
+        run: |
+          git config user.name  "job-alert-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add job_state.json
+          git diff --staged --quiet || git commit -m "chore: update job state $(date -u +%Y-%m-%d)"
+          git push
