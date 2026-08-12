@@ -1,1 +1,86 @@
-{}
+{
+  "Databricks APM": {
+    "found": false,
+    "url": "https://www.databricks.com/company/careers/university-recruiting"
+  },
+  "Google APM": {
+    "found": false,
+    "url": "https://www.google.com/about/careers/applications/jobs/results?category=PRODUCT_MANAGEMENT&employment_type=FULL_TIME&degree=BACHELORS"
+  },
+  "Meta RPM": {
+    "found": true,
+    "url": "https://www.metacareers.com/jobs?teams%5B0%5D=Internship%20-%20Engineering%2C%20Tech%20%26%20Design&teams%5B1%5D=Internship%20-%20Business&q=rotational+product+manager"
+  },
+  "Salesforce APM": {
+    "found": false,
+    "url": "https://salesforce.wd12.myworkdayjobs.com/en-US/External_Career_Site/jobs?q=associate+product+manager&locations=All+Locations"
+  },
+  "Intuit RPM": {
+    "found": false,
+    "url": "https://careers.intuit.com/job-search?keyword=rotational+product+manager&category=Product+Management"
+  },
+  "Atlassian APM": {
+    "found": false,
+    "url": "https://www.atlassian.com/company/careers/all-jobs?team=Product+Management&search=associate"
+  },
+  "Microsoft PM New Grad": {
+    "found": true,
+    "url": "https://jobs.careers.microsoft.com/global/en/search?q=product+manager&lc=United+States&exp=Students+and+recent+graduates"
+  },
+  "LinkedIn APB": {
+    "found": false,
+    "url": "https://careers.linkedin.com/jobs?keywords=associate+product&location=United+States"
+  },
+  "Capital One APM": {
+    "found": true,
+    "url": "https://www.capitalonecareers.com/search-jobs/associate%20product%20manager/4973/1"
+  },
+  "ZS Associates DAA": {
+    "found": false,
+    "url": "https://www.zs.com/careers/find-a-job?area=Business+Consulting+%26+Technology&type=Full-Time&experience=Entry+Level"
+  },
+  "ClearView Healthcare": {
+    "found": true,
+    "url": "https://boards.greenhouse.io/clearviewhealthcarepartners"
+  },
+  "Trinity Life Sciences": {
+    "found": true,
+    "url": "https://www.trinitylifesciences.com/careers/"
+  },
+  "Analysis Group": {
+    "found": false,
+    "url": "https://www.analysisgroup.com/careers/experienced-professionals/open-positions/?practice=health-care-life-sciences"
+  },
+  "Genentech CRDP": {
+    "found": false,
+    "url": "https://www.gene.com/careers/detail?requisitionId=202212-126004"
+  },
+  "Roivant Rotational Analyst": {
+    "found": true,
+    "url": "https://boards.greenhouse.io/roivantsciences"
+  },
+  "AstraZeneca CLDP": {
+    "found": false,
+    "url": "https://careers.astrazeneca.com/job-search?keyword=leadership+development&country=United+States&category=Commercial"
+  },
+  "J&J FLDP": {
+    "found": false,
+    "url": "https://jobs.jnj.com/jobs?keywords=finance+leadership+development&location=United+States"
+  },
+  "Amazon BA / BIE New Grad": {
+    "found": true,
+    "url": "https://www.amazon.jobs/en/search?base_query=business+analyst&category%5B%5D=business-and-merchant-development&job_type%5B%5D=Full-Time&experience_ids%5B%5D=entry-level"
+  },
+  "Visa NCG Analyst": {
+    "found": false,
+    "url": "https://jobs.smartrecruiters.com/Visa/743999941123456-associate-business-analyst"
+  },
+  "DaVita Redwoods": {
+    "found": false,
+    "url": "https://jobs.davita.com/search-jobs/redwoods"
+  },
+  "Veeva Generation Veeva BCDP": {
+    "found": true,
+    "url": "https://careers.veeva.com/job-search/?keyword=generation+veeva"
+  }
+}
